@@ -18,8 +18,8 @@ public class CountryServiceImpl implements CountryService{
 
 
 	@Override
-	public Page<Countries> getAllCountries(String page) {
-		return countryRepository.findAll(new PageRequest(Integer.parseInt(page), 10, Sort.Direction.ASC, "name"));
+	public Page<Countries> getAllCountries(Integer page) {
+		return countryRepository.findAll(new PageRequest(page, 10, Sort.Direction.ASC, "name"));
 	}
 	
 	@Override

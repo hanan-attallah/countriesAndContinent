@@ -27,12 +27,21 @@ public class CountryController {
 
 	// -------------------Retrieve All Countries---------------------------------------------
     @GetMapping
-    public ResponseEntity<Page<Countries>> listAllCountries(@RequestParam("page")String page) {
+    public ResponseEntity<?> listAllCountries(@RequestParam("page")String page) {
     	logger.info("Retrieve 10 Countries start with page: {}", page);
-		Page<Countries> countries = countryService.getAllCountries(page);
-		if (countries == null) {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
-			// You many decide to return HttpStatus.NOT_FOUND
+    	
+    	Integer pageNumber = 0;
+    	try {
+    		pageNumber = Integer.parseInt(page);
+    	}catch(Exception e) {
+    		return new ResponseEntity<>(new CustomErrorType("Wrong passed request param. The URL with param (page=" + page 
+                    + ") is not Integer."), HttpStatus.BAD_REQUEST);
+    	}
+    	
+		Page<Countries> countries = countryService.getAllCountries(pageNumber);
+		if (countries.getSize()==0) {
+			return new ResponseEntity<>(new CustomErrorType("No countries found with page = " + page 
+                    + " "), HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<Page<Countries>>(countries, HttpStatus.OK);
 	}
@@ -46,7 +55,7 @@ public class CountryController {
         Countries country = countryService.findByName(name);
         if (country == null) {
             logger.error("Country with name {} not found.", name);
-            return new ResponseEntity(new CustomErrorType("Country with id " + name 
+            return new ResponseEntity<>(new CustomErrorType("Country with id " + name 
                     + " not found"), HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<Countries>(country, HttpStatus.OK);

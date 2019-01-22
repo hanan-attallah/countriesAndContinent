@@ -7,7 +7,7 @@ public interface CountryService {
 	
 	Countries findByName(String name);
 	
-	Page<Countries> getAllCountries(String page);
+	Page<Countries> getAllCountries(Integer page);
 	
 	//List<Countries> getAllCountries(int pageNumber, int pageSize);
 
