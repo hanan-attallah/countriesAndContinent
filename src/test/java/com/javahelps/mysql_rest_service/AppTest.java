@@ -1,13 +1,34 @@
 package com.javahelps.mysql_rest_service;
 
-import junit.framework.Test;
+import org.junit.runner.RunWith;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.test.context.junit4.SpringRunner;
+import com.javahelps.restservice.repository.CountryRepository;
+import com.javahelps.restservice.service.CountryService;
+
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Unit test for simple App.
  */
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class AppTest extends TestCase {
+	
+	
+	
+	@Autowired
+    private TestRestTemplate restTemplate;
+	@MockBean
+    private CountryRepository countryRepository;
+    @Autowired
+    private CountryService carService;
+
+	
     /**
      * Create the test case
      *
@@ -18,19 +39,17 @@ public class AppTest extends TestCase {
         super( testName );
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
+    @Test
+    public void contextLoads() {
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
-    {
-        assertTrue( true );
+    @Test
+    public void basicTest() {
+        String body = this.restTemplate.getForObject("/", String.class);
+        assertThat(body).contains("Not Found");
     }
+    
+    
+    
+    
 }

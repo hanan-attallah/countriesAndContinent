@@ -2,8 +2,6 @@ package com.javahelps.restservice.repository;
 
 import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-
 import com.javahelps.restservice.entity.Countries;
 
 @RestResource(exported = false)
