@@ -42,14 +42,6 @@ public class AppTest extends TestCase {
     @Test
     public void contextLoads() {
     }
-
-    @Test
-    public void basicTest() {
-        String body = this.restTemplate.getForObject("/", String.class);
-        assertThat(body).contains("Not Found");
-    }
-    
-    
     
     
 }
